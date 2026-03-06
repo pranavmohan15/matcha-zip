@@ -19,16 +19,17 @@ function BeatOverlay({
   subtitle: string | React.ReactNode;
   align: "left" | "center" | "right";
 }) {
+  // If start is 0, start fully visible immediately
   const opacity = useTransform(
     progress,
-    [start, start + 0.1, end - 0.1, end],
-    [0, 1, 1, 0]
+    [start === 0 ? 0 : start, start === 0 ? 0 : start + 0.05, end - 0.05, end],
+    [start === 0 ? 1 : 0, 1, 1, 0]
   );
 
   const y = useTransform(
     progress,
-    [start, start + 0.1, end - 0.1, end],
-    [20, 0, 0, -20]
+    [start === 0 ? 0 : start, start === 0 ? 0 : start + 0.05, end - 0.05, end],
+    [start === 0 ? 0 : 20, 0, 0, -20]
   );
 
   const alignClass =
@@ -42,7 +43,7 @@ function BeatOverlay({
       className={`absolute inset-0 flex flex-col justify-center ${alignClass} px-8 md:px-24 pointer-events-none`}
     >
       <div className="max-w-4xl pointer-events-auto">
-        <h2 className="text-5xl md:text-8xl font-bold tracking-tighter text-white/90 mb-4 uppercase">
+        <h2 className="text-5xl md:text-8xl font-bold tracking-tighter text-white/90 mb-4 uppercase drop-shadow-lg">
           {title}
         </h2>
         <div className="text-xl md:text-3xl font-light text-white/60 tracking-tight">
@@ -65,11 +66,11 @@ export default function Home() {
     <div className="bg-[#090E17] text-white min-h-screen smooth-scroll">
       {/* Fixed Navigation Bar */}
       <nav className="fixed top-0 left-0 w-full p-6 md:px-12 z-50 flex items-center justify-between pointer-events-auto mix-blend-difference">
-        <a href="#home" className="text-xl font-bold tracking-[0.2em] uppercase text-white cursor-pointer hover:text-[#00E5FF] transition-colors">Matcha</a>
+        <a href="#home" className="text-xl font-bold tracking-[0.2em] uppercase text-white cursor-pointer hover:text-[#84A96C] transition-colors">Matcha</a>
         <div className="flex gap-6 md:gap-12 text-xs md:text-sm uppercase tracking-widest font-medium text-white/80">
-          <a href="#home" className="hover:text-[#00E5FF] transition-colors">Home</a>
-          <a href="#about" className="hover:text-[#00E5FF] transition-colors">About</a>
-          <a href="#contact" className="hover:text-[#00E5FF] transition-colors">Contact</a>
+          <a href="#home" className="hover:text-[#84A96C] transition-colors">Home</a>
+          <a href="#about" className="hover:text-[#84A96C] transition-colors">About</a>
+          <a href="#contact" className="hover:text-[#84A96C] transition-colors">Contact</a>
         </div>
       </nav>
 
@@ -78,43 +79,43 @@ export default function Home() {
         <MatchaCanvas scrollProgress={scrollYProgress} />
 
         {/* Sticky container for Beats overlay */}
-        <div className="sticky top-0 h-screen w-full overflow-hidden pointer-events-none">
+        <div className="sticky top-0 h-screen w-full overflow-hidden pointer-events-none z-10">
 
-          {/* Beat A: 0 - 20% */}
+          {/* Beat A: 0 - 25% */}
           <BeatOverlay
             progress={scrollYProgress}
-            start={0} end={0.2}
+            start={0} end={0.25}
             title="THE MEGA MATCHA"
             subtitle="A collision of calm and chaos."
             align="center"
           />
 
-          {/* Beat B: 25 - 45% */}
+          {/* Beat B: 25 - 50% */}
           <BeatOverlay
             progress={scrollYProgress}
-            start={0.25} end={0.45}
+            start={0.25} end={0.50}
             title="PURE VELVET"
             subtitle="Artisan-milled green tea meets creamy perfection."
             align="left"
           />
 
-          {/* Beat C: 50 - 70% */}
+          {/* Beat C: 50 - 75% */}
           <BeatOverlay
             progress={scrollYProgress}
-            start={0.50} end={0.70}
+            start={0.50} end={0.75}
             title="HIGH VELOCITY"
             subtitle="A sudden, explosive jolt of rich espresso and shattered ice."
             align="right"
           />
 
-          {/* Beat D: 75 - 95% */}
+          {/* Beat D: 75 - 100% */}
           <BeatOverlay
             progress={scrollYProgress}
-            start={0.75} end={0.95}
+            start={0.75} end={1.0}
             title="TASTE THE IMPACT"
             subtitle={
               <div className="mt-12">
-                <a href="#contact" className="inline-block px-10 py-5 bg-[#00E5FF] pointer-events-auto text-[#090E17] font-semibold text-lg tracking-[0.2em] uppercase rounded-full hover:bg-white transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(132,169,108,0.4)] hover:shadow-[0_0_60px_rgba(255,255,255,0.6)]">
+                <a href="#contact" className="inline-block px-10 py-5 bg-[#84A96C] pointer-events-auto text-[#090E17] font-semibold text-lg tracking-[0.2em] uppercase rounded-full hover:bg-white transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-[0_0_40px_rgba(132,169,108,0.4)] hover:shadow-[0_0_60px_rgba(255,255,255,0.6)]">
                   Order Yours Now
                 </a>
               </div>
@@ -125,7 +126,7 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="relative min-h-[100vh] bg-[#00E5FF] text-[#090E17] flex items-center justify-center p-8 md:p-24 overflow-hidden pt-32 pb-32">
+      <section id="about" className="relative min-h-[100vh] bg-[#05080c] text-white flex items-center justify-center p-8 md:p-24 overflow-hidden pt-32 pb-32">
         <motion.div
           initial={{ opacity: 0, y: 100 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -134,8 +135,8 @@ export default function Home() {
           className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24 items-center relative z-10"
         >
           <div>
-            <h2 className="text-5xl md:text-7xl font-bold tracking-tighter uppercase mb-8">The Art of<br /><span className="text-white">Precision.</span></h2>
-            <div className="w-20 h-2 bg-[#090E17] mb-8 rounded-full"></div>
+            <h2 className="text-5xl md:text-7xl font-bold tracking-tighter uppercase mb-8">The Art of<br /><span className="text-[#84A96C]">Precision.</span></h2>
+            <div className="w-20 h-2 bg-[#84A96C] mb-8 rounded-full"></div>
             <p className="text-lg md:text-xl font-medium leading-relaxed opacity-80">
               Our Mega Matcha Latte is born from a rigorous obsession with quality. We source only the finest, first-harvest ceremonial grade matcha from Uji, Japan.
             </p>
@@ -143,11 +144,11 @@ export default function Home() {
               Blended with velvety micro-foamed oat milk and a violent shock of single-origin espresso, it’s not just a drink. It’s a kinetic experience built for those who never settle.
             </p>
           </div>
-          <div className="relative aspect-square bg-[#090E17] rounded-[4rem] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] transform -rotate-3 hover:rotate-0 transition-transform duration-500">
+          <div className="relative aspect-square bg-[#090E17] rounded-[4rem] overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] transform -rotate-3 hover:rotate-0 transition-transform duration-500 border border-white/5">
             <div className="absolute inset-0 bg-[url('/sequence/frame_79.webp')] bg-cover bg-center opacity-70 mix-blend-screen scale-110 hover:scale-105 transition-transform duration-700"></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-12">
+            <div className="absolute inset-0 bg-gradient-to-t from-[#05080c]/90 to-transparent flex items-end p-12">
               <div className="text-white">
-                <div className="text-sm tracking-[0.2em] font-bold uppercase text-[#00E5FF] mb-2">Final Form</div>
+                <div className="text-sm tracking-[0.2em] font-bold uppercase text-[#84A96C] mb-2">Final Form</div>
                 <div className="text-2xl font-light">The Perfect Collision</div>
               </div>
             </div>
@@ -164,13 +165,13 @@ export default function Home() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center max-w-3xl w-full"
         >
-          <div className="inline-block px-4 py-2 border border-[#00E5FF]/50 rounded-full text-[#00E5FF] text-xs font-bold tracking-widest uppercase mb-8">Secure Yours</div>
-          <h2 className="text-5xl md:text-8xl font-bold tracking-tighter uppercase mb-6 text-white drop-shadow-2xl">Imbibe the <br /><span className="text-[#00E5FF]">Chaos.</span></h2>
+          <div className="inline-block px-4 py-2 border border-[#84A96C]/50 rounded-full text-[#84A96C] text-xs font-bold tracking-widest uppercase mb-8">Secure Yours</div>
+          <h2 className="text-5xl md:text-8xl font-bold tracking-tighter uppercase mb-6 text-white drop-shadow-2xl">Imbibe the <br /><span className="text-[#84A96C]">Chaos.</span></h2>
           <p className="text-xl text-white/50 mb-12 font-light">Visit our flagship concept stores or order the Mega drop online before it sells out.</p>
 
           <form className="flex flex-col gap-6 max-w-md mx-auto pointer-events-auto">
-            <input type="email" placeholder="ENTER YOUR EMAIL" className="w-full bg-white/5 border border-white/20 rounded-xl px-6 py-5 text-white placeholder-white/40 focus:outline-none focus:border-[#00E5FF] transition-colors tracking-widest text-sm uppercase" />
-            <button type="button" className="px-10 py-5 bg-white text-[#090E17] font-bold text-sm tracking-[0.2em] uppercase rounded-xl hover:bg-[#00E5FF] hover:text-white transition-all duration-300 shadow-xl hover:shadow-[#00E5FF]/20 hover:-translate-y-1">
+            <input type="email" placeholder="ENTER YOUR EMAIL" className="w-full bg-white/5 border border-white/20 rounded-xl px-6 py-5 text-white placeholder-white/40 focus:outline-none focus:border-[#84A96C] transition-colors tracking-widest text-sm uppercase" />
+            <button type="button" className="px-10 py-5 bg-white text-[#090E17] font-bold text-sm tracking-[0.2em] uppercase rounded-xl hover:bg-[#84A96C] hover:text-[#090E17] transition-all duration-300 shadow-xl hover:shadow-[#84A96C]/20 hover:-translate-y-1">
               Join the Waitlist
             </button>
           </form>

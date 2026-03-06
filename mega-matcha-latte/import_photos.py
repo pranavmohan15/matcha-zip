@@ -14,6 +14,9 @@ for f in os.listdir(dest_dir):
 frames = [f for f in os.listdir(src_dir) if f.startswith('ezgif-frame-') and f.endswith('.jpg')]
 frames.sort()
 
+# We are keeping all frames now, including the first 21
+# frames = frames[21:]
+
 print(f"Found {len(frames)} frames. Converting and copying...")
 
 for i, frame in enumerate(frames):

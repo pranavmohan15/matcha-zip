@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { useSpring, useTransform, motion, MotionValue } from "framer-motion";
+import { useSpring, useTransform, motion, MotionValue, AnimatePresence } from "framer-motion";
 
 const FRAME_COUNT = 80;
 
@@ -112,22 +112,8 @@ export default function MatchaCanvas({ scrollProgress }: { scrollProgress: Motio
         };
     }, [loaded, images, smoothProgress]);
 
-    if (loaded < FRAME_COUNT) {
-        const progressPercent = Math.round((loaded / FRAME_COUNT) * 100);
-        return (
-            <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center bg-black text-white/60">
-                <div className="w-64 h-[2px] bg-white/10 rounded-full overflow-hidden mb-6 relative">
-                    <div
-                        className="absolute top-0 left-0 h-full bg-[#84A96C] transition-all duration-300 ease-out"
-                        style={{ width: `${progressPercent}%` }}
-                    />
-                </div>
-                <div className="text-[11px] tracking-[0.2em] font-medium uppercase animate-pulse">
-                    Brewing Experience {progressPercent}%
-                </div>
-            </div>
-        );
-    }
+    const isLoaded = loaded >= FRAME_COUNT;
+    const progressPercent = Math.round((loaded / FRAME_COUNT) * 100);
 
     return (
         <div className="sticky top-0 h-screen w-full bg-black overflow-hidden flex items-center justify-center pointer-events-none">
@@ -144,6 +130,39 @@ export default function MatchaCanvas({ scrollProgress }: { scrollProgress: Motio
                 <div className="text-[10px] tracking-widest text-white/50 uppercase">Scroll slowly</div>
                 <div className="w-[1px] h-12 bg-gradient-to-b from-white/30 to-transparent" />
             </motion.div>
+
+            {/* Global Loader Veil */}
+            <AnimatePresence>
+                {!isLoaded && (
+                    <motion.div
+                        key="global-loader"
+                        initial={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 1.2, ease: "easeInOut" }}
+                        className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#090E17] text-white/60 pointer-events-auto"
+                    >
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.2 }}
+                            className="flex flex-col items-center w-full max-w-sm px-6"
+                        >
+                            <div className="text-sm font-bold tracking-[0.3em] uppercase text-white mb-8">
+                                Matcha
+                            </div>
+                            <div className="w-full h-[2px] bg-white/10 rounded-full overflow-hidden mb-6 relative">
+                                <div
+                                    className="absolute top-0 left-0 h-full bg-[#84A96C] transition-all duration-300 ease-out"
+                                    style={{ width: `${progressPercent}%` }}
+                                />
+                            </div>
+                            <div className="text-[10px] tracking-[0.2em] font-medium uppercase animate-pulse">
+                                Brewing Experience {progressPercent}%
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
