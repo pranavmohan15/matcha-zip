@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useSpring, useTransform, motion, MotionValue, AnimatePresence } from "framer-motion";
 
-const FRAME_COUNT = 80;
+const FRAME_COUNT = 196;
 
 export default function MatchaCanvas({ scrollProgress }: { scrollProgress: MotionValue<number> }) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -116,7 +116,7 @@ export default function MatchaCanvas({ scrollProgress }: { scrollProgress: Motio
     const progressPercent = Math.round((loaded / FRAME_COUNT) * 100);
 
     return (
-        <div className="sticky top-0 h-screen w-full bg-black overflow-hidden flex items-center justify-center pointer-events-none">
+        <div className="sticky top-0 h-screen w-full bg-[#050505] overflow-hidden flex items-center justify-center pointer-events-none">
             <canvas
                 ref={canvasRef}
                 className="block absolute inset-0 w-full h-full"
@@ -127,8 +127,8 @@ export default function MatchaCanvas({ scrollProgress }: { scrollProgress: Motio
                 style={{ opacity: scrollIndicatorOpacity }}
                 className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 pointer-events-none"
             >
-                <div className="text-[10px] tracking-widest text-white/50 uppercase">Scroll slowly</div>
-                <div className="w-[1px] h-12 bg-gradient-to-b from-white/30 to-transparent" />
+                <div className="text-[10px] tracking-widest text-[#FDFDF9]/50 uppercase">Scroll slowly</div>
+                <div className="w-[1px] h-12 bg-gradient-to-b from-[#FDFDF9]/30 to-transparent" />
             </motion.div>
 
             {/* Global Loader Veil */}
@@ -139,7 +139,7 @@ export default function MatchaCanvas({ scrollProgress }: { scrollProgress: Motio
                         initial={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 1.2, ease: "easeInOut" }}
-                        className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#090E17] text-white/60 pointer-events-auto"
+                        className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#050505] text-[#FDFDF9]/60 pointer-events-auto"
                     >
                         <motion.div
                             initial={{ opacity: 0, y: 10 }}
@@ -147,16 +147,16 @@ export default function MatchaCanvas({ scrollProgress }: { scrollProgress: Motio
                             transition={{ delay: 0.2 }}
                             className="flex flex-col items-center w-full max-w-sm px-6"
                         >
-                            <div className="text-sm font-bold tracking-[0.3em] uppercase text-white mb-8">
-                                Matcha
+                            <div className="text-sm font-bold tracking-[0.3em] uppercase text-[#FDFDF9] mb-8">
+                                Matcha Blanc
                             </div>
-                            <div className="w-full h-[2px] bg-white/10 rounded-full overflow-hidden mb-6 relative">
+                            <div className="w-full h-[2px] bg-[#FDFDF9]/10 rounded-full overflow-hidden mb-6 relative">
                                 <div
-                                    className="absolute top-0 left-0 h-full bg-[#84A96C] transition-all duration-300 ease-out"
+                                    className="absolute top-0 left-0 h-full bg-[#5C8B40] transition-all duration-300 ease-out"
                                     style={{ width: `${progressPercent}%` }}
                                 />
                             </div>
-                            <div className="text-[10px] tracking-[0.2em] font-medium uppercase animate-pulse">
+                            <div className="text-[10px] tracking-[0.2em] font-medium uppercase text-[#FDFDF9] animate-pulse">
                                 Brewing Experience {progressPercent}%
                             </div>
                         </motion.div>

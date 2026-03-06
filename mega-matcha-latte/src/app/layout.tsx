@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Mega Matcha Latte",
+  title: "Matcha Blanc",
   description: "A collision of calm and chaos. Scrollytelling experience.",
 };
 
@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} tracking-tight antialiased bg-[#090E17] text-white`}>
+      <body className={`${inter.className} tracking-tight antialiased bg-[#050505] text-[#FDFDF9]`}>
         {children}
       </body>
     </html>
